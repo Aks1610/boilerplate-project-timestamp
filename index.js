@@ -32,14 +32,14 @@ app.get("/api/:date?", (req, res) => {
     res.json({ "unix": dateString.getTime(), "utc": dateString.toUTCString() })
   } else if (/\d{5,}/.test(dateString)) {
     let dateInt = parseInt(dateString);
-    res.json({ unix: dateString, utc: new Date(dateInt).toUTCString() });
+    res.json({ "unix": dateString, "utc": new Date(dateInt).toUTCString() });
   } else {
     let dateObject = new Date(dateString);
 
     if (dateObject.toString() === "Invalid Date") {
       res.json({ error: "Invalid Date" });
     } else {
-      res.json({ unix: dateObject.valueOf(), utc: dateObject.toUTCString() });
+      res.json({ "unix": dateObject.valueOf(), "utc": dateObject.toUTCString() });
     }
   }
 });
