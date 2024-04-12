@@ -24,12 +24,13 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-app.get("/api/:date", (req, res) => {
+app.get("/api/:date?", (req, res) => {
   let dateString = req.params.date;
-  if(!req.params.date_string){
-    dateString=new Date();
-  }
-  if (/\d{5,}/.test(dateString)) {
+  //console.log(dateString);
+  if (!req.params.date) {
+    dateString = new Date()
+    res.json({ "unix": dateString.getTime(), "utc": dateString.toUTCString() })
+  } else if (/\d{5,}/.test(dateString)) {
     let dateInt = parseInt(dateString);
     res.json({ unix: dateString, utc: new Date(dateInt).toUTCString() });
   } else {
